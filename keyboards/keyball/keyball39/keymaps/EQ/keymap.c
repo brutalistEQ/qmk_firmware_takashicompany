@@ -410,6 +410,22 @@ void oledkit_render_logo_user(void) {
     };
   oled_write_raw_P(my_logo, sizeof(my_logo));
 }
+
+bool oled_task_user(void) {
+    if (is_keyboard_master()) {
+      oledkit_render_info_user();
+    } else {
+      oledkit_render_logo_user();
+    }
+    return true;
+}
+ 
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    return !is_keyboard_left() ? OLED_ROTATION_180 : rotation;
+
+    // return OLED_ROTATION_270;
+}
+
 #endif
 
 // clang-format off
